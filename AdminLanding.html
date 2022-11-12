@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+<head>
+    <!--<link href="assets/css/style-order-return.css" rel="stylesheet">-->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <script src="assets/js/Gigya.js"></script>
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <script src="https://cdns.gigya.com/js/gigya.js?apiKey=4_oMwlIxZWipk7JkeWZ-b2LA"></script>
+    
+
+</head>
+<body onload="Adminload();">
+
+
+    <table width="100%">
+        <tr>
+            <td>
+                <div id="header"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <section id="ord-ret-hero">
+                    <h1 style="font-family:arial">Welcome to B2B Admin Portal </h1>
+                </section>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="data"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="footer"></div>
+            </td>
+        </tr>
+    </table>
+
+
+    <script type="text/javascript">
+        var apiKey = "4_oMwlIxZWipk7JkeWZ-b2LA";
+        var secretKey = "JpvRlfmE6xSu%2F%2BSHkU6OdaRY0cuMtwim94iCX3MHEBA%3D";
+
+        setroles();
+        //var method = "accounts.search";
+        //var query = "SELECT  groups.organizations.orgName FROM accounts WHERE groups.organizations.orgName is not null";
+
+        var query = "SELECT profile.firstName, profile.lastName, profile.email, groups.organizations.orgName, groups.organizations.roles,isActive FROM accounts WHERE groups.organizations.orgName is not null";
+        //const url = 'https://accounts.us1.gigya.com/accounts.search?apiKey=4_zU_l5sFaCUWaU5W-0KFDzw&secret=JpvRlfmE6xSu%2F%2BSHkU6OdaRY0cuMtwim94iCX3MHEBA%3D&query=SELECT%20profile.firstName,UID%20FROM%20accounts';
+        const url = "https://accounts.us1.gigya.com/accounts.search?apiKey=" + apiKey + "&secret=" + secretKey + "&query=" + query;
+        //alert(url);
+        var xhr = new XMLHttpRequest();
+        //var params = 'querySig=' + query + '_' + abs(now - timestamp) ;
+        
+        xhr.open('POST', url, true);
+        //xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+        //Send the proper header information along with the request
+        //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhr.onload = function () {//Call a function when the state changes.
+            if (xhr.status == 200) {
+                //alert(this.responseText["result"]);
+                var mytable = "<table id=\"Org\" class=\"table\" border=1><tr>" +
+                    "<th>First Name</th>" +
+                    "<th>Last Name</th>" +
+                    "<th>Email</th>" +
+                    "<th>Organization</th>" +
+                    "<th>Roles</th>" +
+                    "<th>Status</th>" +
+                    "</tr>";
+                const response = JSON.parse(this.responseText);
+                //console.log((JSON.stringify(this.responseText)));
+                if (response["errorCode"] == 0) {
+                    var final;
+                    var keys;
+                    var status;
+                    const responses = response["results"];
+                    console.log("stringy : " + JSON.stringify(responses));
+                    
+                    Object.entries(responses).forEach((entry) => {
+                        
+                        const [key, value] = entry;
+                        //alert(JSON.stringify(value.groups));
+                        var roles = value.groups.organizations[0].roles;
+                        if (value.isActive === true) {
+
+                            status = "Enabled";
+                            //alert(status);
+                        }
+                        else {
+                            status = "Disabled";
+                        }
+                        //alert(roles);
+                        //roles = roles.replace(/"/g, "").replace("[", "").replace("]", "");
+                        //alert(roles);
+                        //var i = roles.length;
+                        var rolenames='';
+                        var role;
+                        //alert(roles);
+                        //for (var i = 0; i <= roles.count; i++) {
+                        //    alert(roles[i]);
+                        //    role = localStorage.getItem(roles[i]);
+                        //    alert(role);
+                        //    role = role + "<br\>";
+                        //    rolenames = rolenames + role;
+                        //    alert(rolenames);
+                        //}
+                        roles.forEach(function (roleid) {
+
+                            role = localStorage.getItem(roleid);
+                            //if (i > 1) {
+                            //    role = role + ";";
+                            //}
+                            //else {
+                            //    role = role;
+                            //}
+                            role = role + ",";
+                            rolenames = rolenames + role;
+                            str = rolenames.replace(/,(?![\s\S]*,)/, '');
+                            //console.log(str);
+                        });
+
+                        mytable += "<tr>" +
+                            "<td> " + JSON.stringify(value.profile.firstName).replace(/"/g, "")+ "</td >" +
+                            "<td> " + JSON.stringify(value.profile.lastName).replace(/"/g, "") + "</td >" +
+                            "<td> " + JSON.stringify(value.profile.email).replace(/"/g, "") + "</td >" +
+                            "<td> " + JSON.stringify(value.groups.organizations[0].orgName).replace(/"/g, "") + "</td>" +
+
+                            "<td> " + str + "</td>" +
+                            "<td> " + status + "</td>"
+                        
+                        //console.log(JSON.stringify(value));
+                        //final = final + JSON.stringify(value.profile);
+
+                        //final = value;
+                        //alert(final);
+                        //keys = JSON.stringify(value);
+                    });
+                    //alert(mytable);
+                    //console.log(final);
+                    //var myStrObj = final;
+                    //var myHtmlTableObj = myStrObj.replace(/{/g, "<table><tr><td>").replace(/:/g, "</td><td>", "g").replace(/,/g, "</td></tr><tr><td>", "g").replace(/}/g, "</table>")
+                    //alert(myHtmlTableObj);
+                    //alert(mytable);
+                    
+                    $('#data').html(mytable);
+                    var seen = {};
+                    $('table tr ').each(function () {
+                        var txt = $("td:first-child", $(this)).text();
+                        if (seen[txt]) $(this).remove();
+                        else seen[txt] = true;
+                    });
+
+                }
+
+                else {
+
+                }
+
+
+            }
+        }
+        xhr.send();
+
+
+
+
+
+        //var querySigServer = "JpvRlfmE6xSu/+SHkU6OdaRY0cuMtwim94iCX3MHEBA=";
+        //var expTimeServer = "<Injected_by_Server>";
+        //function showSearchInfo(response) {
+        //    alert(JSON.stringify(response));
+        //}
+        //var searchParams = {
+        //    query: "SELECT profile.firstName,profile.lastName FROM accounts'",
+        //    querySig: querySigServer,
+        //    //expTime: expTimeServer,
+        //    callback: showSearchInfo
+        //};
+        //gigya.accounts.search(searchParams);
+
+
+        var session_UID = AdminCheckLogin();
+        if (session_UID != null || typeof session_UID != "undefined") {
+
+
+            var mytable = "<table width=\"100%\"><tbody><tr><td><section id=\"ord-ret-hero\">" +
+
+                "<div class=\"container\">" +
+                "<div class=\"col-lg-7 order-2 order-lg-1 d-flex align-items-center\">" +
+                "<div data-aos=\"zoom-out\" class=\"aos-init aos-animate\">" +
+                //"<h1>Empower your organization with CIAM POC </h1></div></div></div></section ></td></tr><tr><td>";
+                "<h1 style=\"font-family:arial\">Welcome to B2C Admin Portal </h1></div></div></div></section ></td></tr><tr><td>"
+
+
+            //mytable +=
+            //  "<section id=\"services\" class=\"services\"><div class=\"container\"><div class=\"section-title\"><h2 id=\"dname\"></h2></div><div align=\"center\">"
+
+            //mytable +=
+            //    "<section id=\"services\" class=\"services\"><div class=\"container\"><div class=\"section-title\"><h2 id=\"dname\"></h2><p style=\"text-colour:white\">You are in B2B Portal.<br/>Below are the list of applications which you have access.</p></div><div class=\"row\">"
+
+            mytable += "<table><tr>";
+
+            //const roleids = sessionStorage.getItem("roles");
+
+            //roleids.split(",").forEach(function (roleid) {
+            //role = localStorage.getItem(roleid);
+            //if (role == "Delegated Admin") {
+
+            //opendelegateadmin(sessionStorage.getItem('OrgID'));
+            //}
+            //else {
+
+            //mytable += "<td onclick =\"services()\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4><a href=\"\" onclick=\"services()\">Healthcare Services</a></h4><p>Improve wholesale medical equipment ordering and returns efficiency with Roche web-based application</p></div></div></td>"
+
+            //mytable += "<td onclick=\"services()\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4><a href=\"\" onclick=\"services()\">Medical Prescription</a></h4><p>Improve wholesale medical equipment ordering and returns efficiency with Roche web-based application</p></div></div>"
+
+            //mytable += "</td></tr><tr>"
+
+
+            //mytable += "<td onclick=\"services()\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4><a href=\"\" onclick=\"services()\">Pharmacy</a></h4><p>Improve wholesale medical equipment ordering and returns efficiency with Roche web-based application</p></div></div></td>"
+
+            //mytable += "<td onclick=\"services()\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4><a href=\"\" onclick=\"services()\">Online Prescription</a></h4><p>Improve wholesale medical equipment ordering and returns efficiency with Roche web-based application</p></div></div>"
+            //mytable += "</td>"
+            //}
+            //})
+
+            console.log(mytable);
+
+            //mytable += "<td><h1>Work in Progress..</h1></td></tr></table></div></div></section ></td></tr><tr><td>"
+
+            mytable += "<td><div id=\"data\"></div></td></tr></table></div></div></section ></td></tr><tr><td>"
+            mytable +=
+                "<hr style=\"height: 420px;visibility: hidden\" /><div id=\"footer\"></div>" +
+                "</td></tr ></tbody ></table >";
+
+            //document.write(mytable);
+
+
+            //document.getElementById("dname").innerText = "Welcome to B2C Portal";
+            //document.getElementById("dname").innerText = "Welcome : " + sessionStorage.getItem("SName") + "    " + "| Account for : " + sessionStorage.getItem("SOrgName");
+            //if (localStorage.getItem("DACheck") == "Yes") {
+            //    document.getElementById("DAT").style.display = "block";
+            //}
+            //else {
+            //    document.getElementById("DAT").style.display = "none";
+            //}
+
+
+            //var session_UID = CheckLogin();
+        }
+
+
+
+    </script>
+
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/IndexedDB.js"></script>
+
+
+
+
+
+</body>
+</html>
