@@ -428,6 +428,6 @@ function setroles() {
 
     localStorage.setItem("9396cbdd-320f-4a6f-ab3d-7db4fbedda6a", "Delegated Admin");
     localStorage.setItem("7853dce4-23ae-4cca-9691-2859300eac76", "Ordering");
-    localStorage.setItem("98e288cc-63ed-44bc-adc9-88acee3d1224", "Returns");
+    localStorage.setItem("98e288cc-63ed-44bc-adc9-88acee3d1224", "Return");
 }
 
