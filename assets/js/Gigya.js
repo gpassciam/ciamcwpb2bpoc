@@ -28,10 +28,10 @@ function SignInScreen(flag) {
         console.log(flag);
         setroles();
         gigya.accounts.showScreenSet({
-            screenSet: 'Online_Medical-RegistrationLogin',
+            screenSet: 'CWP-DEV-RegistrationLogin',
             startScreen: 'gigya-login-screen',
             customLang: customLangParams,
-            
+            containerID: 'LoginScreen'
             
         });
         gigya.accounts.addEventHandlers({
