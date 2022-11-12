@@ -142,7 +142,7 @@ function SignUpScreen(flag) {
     if (flag == 'Organization') {
         //document.getElementById("divsignup").style.display = "none";
         gigya.accounts.showScreenSet({
-            screenSet: 'Online_Medical-OrganizationRegistration',
+            screenSet: 'CWP-DEV-RegistrationLogin',
             startScreen: 'gigya-org-register-screen',
             customLang: customLangParams,
             //containerID: 'divsignup'
@@ -426,8 +426,8 @@ function AdminLogin(flag) {
 
 function setroles() {
 
-    localStorage.setItem("485c9a75-2633-4f90-b48d-dd2b3a891d86", "Delegated Admin");
-    localStorage.setItem("cbdc0b70-6d69-4946-8443-060de6fbefbc", "Ordering");
-    localStorage.setItem("8de8cd93-103f-4277-a8df-e7a697d75d14", "Returns");
+    localStorage.setItem("9396cbdd-320f-4a6f-ab3d-7db4fbedda6a", "Delegated Admin");
+    localStorage.setItem("7853dce4-23ae-4cca-9691-2859300eac76", "Ordering");
+    localStorage.setItem("98e288cc-63ed-44bc-adc9-88acee3d1224", "Return");
 }
 
