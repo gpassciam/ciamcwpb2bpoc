@@ -58,7 +58,7 @@
 
             var DBName = "Users";
             var Table = "Users_Info";
-            
+
             var mytable = "<table width=\"100%\"><tbody><tr><td><div id=\"header\"></div></td></tr><tr><td><section id=\"ord-ret-hero\">" +
 
                 "<div class=\"container\">" +
@@ -75,49 +75,49 @@
 
             mytable += "<table><tr>";
             //const roleids = sessionStorage.getItem("roles");
-            
+
             getUID(DBName, Table, session_UID).then(function (SUID) {
-                
-            
-            const roleids = sessionStorage.getItem("roles");
-            //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
-            roleids.split(",").forEach(function (roleid) {
-                role = localStorage.getItem(roleid);
-                //if (role == "Delegated Admin") {
-
-                //    //opendelegateadmin(sessionStorage.getItem('OrgID'));
-                //}
-                /*else {*/
-                if (role == "Delegated Admin") {
-
-                    mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Use delegated administration to assign limited admin privileges to users in your org who aren’t administrators</p></div></div></td>"
-
-                }
-                if (role == "Ordering") {
-
-                    mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment ordering efficiency with Roche web-based application</p></div></div></td>"
-
-                }
-                if (role == "Return") {
-                    mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment returns efficiency with Roche web-based application</p></div></div></td>"
-
-                }
-                /*}*/
-
-            })
 
 
-            mytable += "</tr></table></div></div></section ></td></tr><tr><td>"
-            mytable +=
-                "<hr style=\"height: 50pt;visibility: hidden\" /><div id=\"footer\"></div>" +
-                "</td></tr ></tbody ></table >";
+                const roleids = sessionStorage.getItem("roles");
+                //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
+                roleids.split(",").forEach(function (roleid) {
+                    role = localStorage.getItem(roleid);
+                    //if (role == "Delegated Admin") {
+
+                    //    //opendelegateadmin(sessionStorage.getItem('OrgID'));
+                    //}
+                    /*else {*/
+                    if (role == "Delegated Admin") {
+
+                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Use delegated administration to assign limited admin privileges to users in your org who aren’t administrators</p></div></div></td>"
+
+                    }
+                    if (role == "Ordering") {
+
+                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment ordering efficiency with Roche web-based application</p></div></div></td>"
+
+                    }
+                    if (role == "Return") {
+                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment returns efficiency with Roche web-based application</p></div></div></td>"
+
+                    }
+                    /*}*/
+
+                })
 
 
-            document.write(mytable);
-           
-                });
-        
+                mytable += "</tr></table></div></div></section ></td></tr><tr><td>"
+                mytable +=
+                    "<hr style=\"height: 50pt;visibility: hidden\" /><div id=\"footer\"></div>" +
+                    "</td></tr ></tbody ></table >";
 
+
+                document.write(mytable);
+
+            });
+
+        }
 
     </script>
 
