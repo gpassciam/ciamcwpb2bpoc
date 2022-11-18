@@ -35,13 +35,21 @@
             if (flag == "Delegated Admin") {
 
                 
-                opendelegateadmin('89ddc687-377e-4007-ad64-3675c5cb9ac6');
+                opendelegateadmin(localStorage.getItem('OrgID'));
 
             }
         }
 
         //var session_UID = CheckLogin();
-        //if (session_UID != null || typeof session_UID != "undefined") {
+        var session_UID = localStorage.getItem("SUID");
+
+        if (session_UID == null || typeof session_UID == "undefined") {
+            //flag = 0;
+            alert('Please Login to Proceed');
+            window.location = 'index.html';
+
+        }
+        else {
             var mytable = "<table width=\"100%\"><tbody><tr><td><div id=\"header\"></div></td></tr><tr><td><section id=\"ord-ret-hero\">" +
 
                 "<div class=\"container\">" +
@@ -58,8 +66,8 @@
 
             mytable += "<table><tr>";
 
-            //const roleids = sessionStorage.getItem("roles");
-        const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
+            const roleids = localStorage.getItem("roles");
+            //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
             roleids.split(",").forEach(function (roleid) {
                 role = localStorage.getItem(roleid);
                 //if (role == "Delegated Admin") {
@@ -77,8 +85,7 @@
                     mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment ordering efficiency with Roche web-based application</p></div></div></td>"
 
                 }
-                if(role == "Return")
-                {
+                if (role == "Return") {
                     mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment returns efficiency with Roche web-based application</p></div></div></td>"
 
                 }
@@ -86,7 +93,7 @@
 
             })
 
-            
+
             mytable += "</tr></table></div></div></section ></td></tr><tr><td>"
             mytable +=
                 "<hr style=\"height: 50pt;visibility: hidden\" /><div id=\"footer\"></div>" +
@@ -94,6 +101,9 @@
 
 
             document.write(mytable);
+        }
+        //if (session_UID != null || typeof session_UID != "undefined") {
+            
 
 
             //document.getElementById("dname").innerText = "Welcome to B2B Portal";
