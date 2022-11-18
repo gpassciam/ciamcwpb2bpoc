@@ -137,13 +137,14 @@ function getUIDChild(event, Table, UID, resolve) {
         SName = query.result.profile.firstName;
         Sprovider = query.result.provider;
         
-        if (sessionStorage.getItem("flag") == 'b2b') {
+        //if (sessionStorage.getItem("flag") == 'b2b') {
             SOrgName = query.result.groups.organizations[0].orgName;
             SUID = SUID + "," + SName + "," + Sprovider + "," + SOrgName;
             Orgid = query.result.groups.organizations[0].orgId;
             var roles = query.result.groups.organizations[0].roles;
             sessionStorage.setItem("OrgID", Orgid);
-            sessionStorage.setItem("roles", roles);
+        sessionStorage.setItem("roles", roles);
+        alert("org" + Orgid);
             roles.forEach(function (roleid) {
                 role = localStorage.getItem(roleid);
                 if (role == "Delegated Admin") {
@@ -169,7 +170,7 @@ function getUIDChild(event, Table, UID, resolve) {
         db.close();
         //return SUID;
     }
-}
+//}
 
 function UpdateData(DBName, Table, Data, UID) {
     var request = indexedDB.open(DBName);

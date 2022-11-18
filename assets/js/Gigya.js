@@ -351,7 +351,7 @@ function ChangePassScreen() {
 function CheckLogin() {
     //let flag;
     var session_UID = localStorage.getItem("SUID");
-    
+    alert(session_UID);
     if (session_UID == null || typeof session_UID == "undefined") {
         //flag = 0;
         alert('Please Login to Proceed');

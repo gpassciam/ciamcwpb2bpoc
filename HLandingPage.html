@@ -8,7 +8,7 @@
     <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  
+    <script src="assets/js/IndexedDB.js"></script>
 
 </head>
 <body>
@@ -35,21 +35,29 @@
             if (flag == "Delegated Admin") {
 
                 
-                opendelegateadmin(localStorage.getItem('OrgID'));
+                opendelegateadmin(sessionStorage.getItem('OrgID'));
 
             }
         }
 
         //var session_UID = CheckLogin();
-        var session_UID = localStorage.getItem("SUID");
-
+        const queryString = window.location.search;
+        //console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        //alert(urlParams.get('UID'));
+        var session_UID = urlParams.get('UID');
+        //alert(session_UID);
         if (session_UID == null || typeof session_UID == "undefined") {
-            //flag = 0;
+            flag = 0;
             alert('Please Login to Proceed');
             window.location = 'index.html';
 
         }
         else {
+
+            var DBName = "Users";
+            var Table = "Users_Info";
+            
             var mytable = "<table width=\"100%\"><tbody><tr><td><div id=\"header\"></div></td></tr><tr><td><section id=\"ord-ret-hero\">" +
 
                 "<div class=\"container\">" +
@@ -65,8 +73,11 @@
             //    "<section id=\"services\" class=\"services\"><div class=\"container\"><div class=\"section-title\"><h2 id=\"dname\"></h2><p style=\"text-colour:white\">You are in B2B Portal.<br/>Below are the list of applications which you have access.</p></div><div class=\"row\">"
 
             mytable += "<table><tr>";
-
-            const roleids = localStorage.getItem("roles");
+            //const roleids = sessionStorage.getItem("roles");
+            
+            getUID(DBName, Table, session_UID);
+            const roleids = sessionStorage.getItem("roles");
+            
             //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
             roleids.split(",").forEach(function (roleid) {
                 role = localStorage.getItem(roleid);
@@ -125,7 +136,7 @@
 
 
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/IndexedDB.js"></script>
+    
     <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_AV5pqQcLCM0a9C53WPjvbA"></script>
 
 
