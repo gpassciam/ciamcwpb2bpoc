@@ -178,7 +178,7 @@ function ShowEditScreen() {
 
 
 function opendelegateadmin(orgid) {
-    alert(orgid);
+    //alert(orgid);
     var params = {
         "orgId": orgid
     }
