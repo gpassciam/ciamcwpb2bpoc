@@ -153,7 +153,8 @@ function getUIDChild(event, Table, UID, resolve) {
                 }
 
                 }
-            )}
+            )
+        //}
       
         
         console.table(query.result); // result objects
@@ -170,7 +171,7 @@ function getUIDChild(event, Table, UID, resolve) {
         db.close();
         //return SUID;
     }
-//}
+}
 
 function UpdateData(DBName, Table, Data, UID) {
     var request = indexedDB.open(DBName);
