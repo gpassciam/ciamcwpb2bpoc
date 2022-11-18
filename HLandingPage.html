@@ -76,10 +76,12 @@
             mytable += "<table><tr>";
             //const roleids = sessionStorage.getItem("roles");
             setroles();
+            const roleids;
             getUID(DBName, Table, session_UID).then(function (SUID) {
 
-
-                const roleids = sessionStorage.getItem("roles");
+                roleids = sessionStorage.getItem("roles");
+            });
+                
                 //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
                 roleids.split(",").forEach(function (roleid) {
                     role = localStorage.getItem(roleid);
@@ -115,7 +117,7 @@
 
                 document.write(mytable);
 
-            });
+           
 
         }
 
