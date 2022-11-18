@@ -144,7 +144,7 @@ function getUIDChild(event, Table, UID, resolve) {
             var roles = query.result.groups.organizations[0].roles;
             sessionStorage.setItem("OrgID", Orgid);
         sessionStorage.setItem("roles", roles);
-        alert("Roles" + roles);
+        //alert("Roles" + roles);
         //alert("org" + Orgid);
             roles.forEach(function (roleid) {
                 role = localStorage.getItem(roleid);
