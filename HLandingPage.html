@@ -34,8 +34,9 @@
             }
             if (flag == "Delegated Admin") {
 
-                alert("you" + sessionStorage.getItem('OrgID'));
-                opendelegateadmin(sessionStorage.getItem('OrgID'));
+                //alert("you" + sessionStorage.getItem('OrgID'));
+                var msg = opendelegateadmin(sessionStorage.getItem('OrgID'));
+                alert("mess : " + msg);
 
             }
         }
