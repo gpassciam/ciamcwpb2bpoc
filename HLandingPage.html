@@ -11,7 +11,7 @@
     <script src="assets/js/IndexedDB.js"></script>
 
 </head>
-<body onload="setroles()">
+<body>
 
 
 
@@ -75,7 +75,7 @@
 
             mytable += "<table><tr>";
             //const roleids = sessionStorage.getItem("roles");
-
+            setroles();
             getUID(DBName, Table, session_UID).then(function (SUID) {
 
 
