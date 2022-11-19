@@ -133,6 +133,7 @@ function getUIDChild(event, Table, UID, resolve) {
     query.onsuccess = function () {
         console.log("On_getUIDChild_onsuccess");
         SUID = query.result.UID;
+        alert("SUID :" + SUID);
         //SName = query.result.profile.firstName + " " + query.result.profile.lastName;
         SName = query.result.profile.firstName;
         Sprovider = query.result.provider;
@@ -142,8 +143,10 @@ function getUIDChild(event, Table, UID, resolve) {
             SUID = SUID + "," + SName + "," + Sprovider + "," + SOrgName;
             Orgid = query.result.groups.organizations[0].orgId;
             var roles = query.result.groups.organizations[0].roles;
-            sessionStorage.setItem("OrgID", Orgid);
+        sessionStorage.setItem("OrgID", Orgid);
+        alert(roles);
         sessionStorage.setItem("roles", roles);
+        alert("getui" + sessionStorage.getItem("roles"))
         //alert("Roles" + roles);
         //alert("org" + Orgid);
             roles.forEach(function (roleid) {
