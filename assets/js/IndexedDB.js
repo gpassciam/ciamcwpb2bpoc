@@ -19,7 +19,7 @@
 
                 console.log("On_ProcessDB_Onupgrade");
                 var db = event.target.result;
-                if (!db.objectStoreNames.contains(Table)) {
+                //if (!db.objectStoreNames.contains(Table)) {
                     console.log("On_Insert_Store_not_exists_Creating");
                     var store = db.createObjectStore(Table, { keyPath: Key }
                     );
@@ -29,7 +29,7 @@
                         unique: true
                     });
                     //store = txn.objectStore(Table);
-                }
+                //}
 
 
             }
