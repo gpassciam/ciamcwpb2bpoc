@@ -351,7 +351,7 @@ function ChangePassScreen() {
 function CheckLogin() {
     //let flag;
     var session_UID = localStorage.getItem("SUID");
-    alert(session_UID);
+    //alert(session_UID);
     if (session_UID == null || typeof session_UID == "undefined") {
         //flag = 0;
         alert('Please Login to Proceed');
@@ -426,6 +426,7 @@ function AdminLogin(flag) {
 
 function setroles() {
 
+    alert('here');
     localStorage.setItem("98e288cc-63ed-44bc-adc9-88acee3d1224", "Delegated Admin");
     localStorage.setItem("7853dce4-23ae-4cca-9691-2859300eac76", "Ordering");
     localStorage.setItem("9396cbdd-320f-4a6f-ab3d-7db4fbedda6a", "Return");
