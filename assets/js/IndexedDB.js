@@ -161,7 +161,8 @@ function getUIDChild(event, Table, UID, resolve) {
         //}
       
         
-        console.table(query.result); // result objects
+        //console.table(query.result); // result objects
+        alert(SUID);
         return resolve(SUID);
 
     };
