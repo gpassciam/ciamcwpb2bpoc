@@ -103,7 +103,7 @@ function getUID(DBName, Table, UID) {
         request.onupgradeneeded = (event) => {
 
             console.log("On_getUID_onupgrade");
-            getUIDChild(event, Table, UID,resolve);
+            getUIDChild(event, Table, UID);
         }
 
         request.onerror = (event) => {
@@ -116,7 +116,7 @@ function getUID(DBName, Table, UID) {
 
 }
 
-function getUIDChild(event, Table, UID, resolve) {
+function getUIDChild(event, Table, UID) {
     var SUID;
     var SName;
     let db = event.target.result;
