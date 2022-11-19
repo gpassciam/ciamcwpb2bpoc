@@ -88,7 +88,7 @@ function insert(event,Table,Data) {
 
 function getUID(DBName, Table, UID) {
 
-    //return new Promise(function (resolve) {
+    return new Promise(function (resolve) {
 
 
         const request = indexedDB.open(DBName);
@@ -103,7 +103,7 @@ function getUID(DBName, Table, UID) {
         request.onupgradeneeded = (event) => {
 
             console.log("On_getUID_onupgrade");
-            getUIDChild(event, Table, UID);
+            getUIDChild(event, Table, UID,resolve);
         }
 
         request.onerror = (event) => {
@@ -112,11 +112,11 @@ function getUID(DBName, Table, UID) {
         }
 
 
-    //});
+    });
 
 }
 
-function getUIDChild(event, Table, UID) {
+function getUIDChild(event, Table, UID, resolve) {
     var SUID;
     var SName;
     let db = event.target.result;
@@ -162,7 +162,7 @@ function getUIDChild(event, Table, UID) {
       
         
         //console.table(query.result); // result objects
-        alert(SUID);
+        //alert(SUID);
         return resolve(SUID);
 
     };
