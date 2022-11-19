@@ -12,7 +12,7 @@
 
             //alert(Key);
             // open the CRM database with the version 1
-            var request =  indexedDB.open(DBName, 3);
+            var request =  indexedDB.open(DBName, 1);
 
             // create the Contacts object store and indexes
             request.onupgradeneeded = (event) => {
