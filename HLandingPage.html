@@ -56,8 +56,8 @@
         }
         else {
 
-            var DBName = "Users";
-            var Table = "Users_Info";
+            //var DBName = "Users";
+            //var Table = "Users_Info";
 
             var mytable = "<table width=\"100%\"><tbody><tr><td><div id=\"header\"></div></td></tr><tr><td><section id=\"ord-ret-hero\">" +
 
@@ -77,14 +77,14 @@
             //const roleids = sessionStorage.getItem("roles");
             setroles();
             var roleids = "";
-            getUID(DBName, Table, session_UID)
-                .then(function (SUID) {
+            //getUID(DBName, Table, session_UID)
+            //    .then(function (SUID) {
 
                     roleids = sessionStorage.getItem("roles");
-                    //alert("roleids :" + roleids);
+                    alert("roleids :" + roleids);
                     getroles(roleids);
-                   });
-            function getroles(roleids) {
+                  // });
+            //function getroles(roleids) {
                 //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
                 roleids.split(",").forEach(function (roleid) {
                     role = localStorage.getItem(roleid);
@@ -123,7 +123,7 @@
                 document.write(mytable);
             }
                //});
-        }
+        //}
                  
 
         
