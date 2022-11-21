@@ -88,7 +88,7 @@ function insert(event,Table,Data) {
 
 function getUID(DBName, Table, UID) {
 
-    return new Promise(function (resolve) {
+    //return new Promise(function (resolve) {
 
 
         const request = indexedDB.open(DBName);
@@ -118,7 +118,7 @@ function getUID(DBName, Table, UID) {
         }
 
 
-    });
+    //});
 
 }
 
