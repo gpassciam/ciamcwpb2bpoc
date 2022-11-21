@@ -103,7 +103,13 @@ function getUID(DBName, Table, UID) {
         request.onupgradeneeded = (event) => {
 
             console.log("On_getUID_onupgrade");
-            getUIDChild(event, Table, UID,resolve);
+            //getUIDChild(event, Table, UID,resolve);
+        }
+
+        request.oncomplete = (event) => {
+
+            console.log("On_getUID_oncomplete");
+            getUIDChild(event, Table, UID, resolve);
         }
 
         request.onerror = (event) => {
