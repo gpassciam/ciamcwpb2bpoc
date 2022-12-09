@@ -91,8 +91,9 @@ function onb2bLogin(response) {
             //    sessionStorage.clear();
             //}
             else {
+                gigya.fidm.saml.continueSSO();
                 //console.log(session_UID);
-                window.location = 'LandingPage.html';
+                //window.location = 'LandingPage.html';
             }
         });
     }
