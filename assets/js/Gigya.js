@@ -58,44 +58,57 @@ function onb2bLogin(response) {
 
     }
 
-    gigya.accounts.getAccountInfo(params, { callback: onTb2bLogin });
+    gigya.accounts.getAccountInfo(params, { callback: doContinueSSO() });
+
+    function doCallback(response) {
+        alert(JSON.stringify(response));
+    }
+    function doContinueSSO() {
+        var params = {
+            //set up the callback to handle the response
+            callback: doCallback
+        };
+        gigya.fidm.saml.continueSSO(params);
+    }
 
     function onTb2bLogin(response) {
-        console.log("OnTb2bLogin:" + JSON.stringify(response));
-        let errorCode = response.errorCode;
-        let UID = response.UID;
-        var key = "UID";
-        let DBName = "Users";
-        let Table = "Users_Info";
-        let Data = JSON.parse(JSON.stringify(response));
-        console.log("Data :" + Data);
-        ProcessDB(DBName, Table, Data, key);
+        //console.log("OnTb2bLogin:" + JSON.stringify(response));
+        //gigya.fidm.saml.continueSSO();
+
+    //    let errorCode = response.errorCode;
+    //    let UID = response.UID;
+    //    var key = "UID";
+    //    let DBName = "Users";
+    //    let Table = "Users_Info";
+    //    let Data = JSON.parse(JSON.stringify(response));
+    //    console.log("Data :" + Data);
+    //    ProcessDB(DBName, Table, Data, key);
        
-        getUID(DBName, Table, UID).then(function (SUID) {
-            const Data = SUID.split(",");
-            localStorage.setItem("SUID", Data[0]);
-            sessionStorage.setItem("SName", Data[1]);
-            //alert(Data[2]);
-            sessionStorage.setItem("SProvider", Data[2]);
-            sessionStorage.setItem("SOrgName", Data[3]);
-            var session_UID = localStorage.getItem("SUID");
-            var session_Name = sessionStorage.getItem("SName");
-            if ((session_UID == null || typeof session_UID == "undefined") && errorCode == 0) {
+    //    getUID(DBName, Table, UID).then(function (SUID) {
+    //        const Data = SUID.split(",");
+    //        localStorage.setItem("SUID", Data[0]);
+    //        sessionStorage.setItem("SName", Data[1]);
+    //        //alert(Data[2]);
+    //        sessionStorage.setItem("SProvider", Data[2]);
+    //        sessionStorage.setItem("SOrgName", Data[3]);
+    //        var session_UID = localStorage.getItem("SUID");
+    //        var session_Name = sessionStorage.getItem("SName");
+    //        if ((session_UID == null || typeof session_UID == "undefined") && errorCode == 0) {
 
 
-                window.location = 'index.html';
+    //            window.location = 'index.html';
 
-            }
-            //else if (sessionStorage.getItem("DACheck") == "Yes") {
-            //    opendelegateadmin(sessionStorage.getItem("OrgID"));
-            //    sessionStorage.clear();
-            //}
-            else {
-                gigya.fidm.saml.continueSSO();
-                //console.log(session_UID);
-                //window.location = 'LandingPage.html';
-            }
-        });
+    //        }
+    //        //else if (sessionStorage.getItem("DACheck") == "Yes") {
+    //        //    opendelegateadmin(sessionStorage.getItem("OrgID"));
+    //        //    sessionStorage.clear();
+    //        //}
+    //        else {
+                
+    //            //console.log(session_UID);
+    //            //window.location = 'LandingPage.html';
+    //        }
+    //    });
     }
 }
 
