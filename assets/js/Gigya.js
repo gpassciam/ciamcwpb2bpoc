@@ -44,8 +44,6 @@ function SignInScreen(flag) {
     }
 
     
-    
-    
 }
 function onb2bLogin(response) {
     console.log("Onb2bLogin:" + JSON.stringify(response));
