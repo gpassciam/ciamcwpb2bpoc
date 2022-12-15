@@ -12,7 +12,7 @@
     <script src="assets/js/IndexedDB.js"></script>
 
 </head>
-<body location.reload();>
+<body>
 
 
 
@@ -46,9 +46,13 @@
             if (flag == "Delegated Admin") {
 
                 console.log("orgid " + orgid);
+                var params = {
+                    "orgId": orgid
+                }
+                gigya.accounts.b2b.openDelegatedAdminLogin(params);
                 //var orgid = sessionStorage.getItem('OrgID');
                 //alert("you : " + sessionStorage.getItem('OrgID'));
-                opendelegateadmin(orgid);
+                //opendelegateadmin(orgid);
                 
 
             }
