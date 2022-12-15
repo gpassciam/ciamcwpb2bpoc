@@ -50,8 +50,8 @@
         //alert(urlParams.get('UID'));
         var firstname = urlParams.get('firstname');
         var OrgName = urlParams.get('OrgName');
-        var roles = urlParams.get('roles');
-        //alert(session_UID);
+        var roleids = urlParams.get('roleids');
+        alert(roleids);
         if (firstname == null) {
             flag = 0;
             alert('Please Login to Proceed');
@@ -87,10 +87,10 @@
                 //.then(function (SUID) {
 
             //roleids = roles;
-                    alert("roleids :" + roles);
-            getroles(roles);
+                    alert("roleids :" + roleids);
+                    getroles(roleids);
                    //});
-            function getroles(roles) {
+            function getroles(roleids) {
                 //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
                 roleids.split(",").forEach(function (roleid) {
                     role = localStorage.getItem(roleid);
