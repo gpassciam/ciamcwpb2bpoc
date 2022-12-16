@@ -5,7 +5,7 @@
     <!--<link href="assets/css/style-order-return.css" rel="stylesheet">-->
     <link href="assets/css/style.css" rel="stylesheet">
     <script src="assets/js/Gigya.js"></script>
-    <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_N5VPDf3V4P1qTxL2V5ssDA"></script>
+    <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_AV5pqQcLCM0a9C53WPjvbA"></script>
 
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
@@ -25,7 +25,7 @@
         //alert(urlParams.get('UID'));
         var firstname = urlParams.get('firstname');
         var orgName = urlParams.get('orgName');
-        var orgid = urlParams.get('orgid');
+        var orgId = urlParams.get('orgid');
         var roleids = urlParams.get('roleids');
 
 
@@ -45,20 +45,20 @@
             }
             if (flag == "Delegated Admin") {
 
-                console.log("orgid " + orgid);
+                console.log("orgid " + orgId);
                 var params = {
-                    "orgId": orgid
+                    "orgId": orgId
                 }
                 gigya.accounts.b2b.openDelegatedAdminLogin(params);
                 //var orgid = sessionStorage.getItem('OrgID');
                 //alert("you : " + sessionStorage.getItem('OrgID'));
                 //opendelegateadmin(orgid);
-                
+
 
             }
         }
 
-        
+
         if (firstname == null) {
             flag = 0;
             alert('Please Login to Proceed');
@@ -67,7 +67,7 @@
         }
         else {
 
-            
+
             var mytable = "<table width=\"100%\"><tbody><tr><td><div id=\"header\"></div></td></tr><tr><td><section id=\"ord-ret-hero\">" +
 
                 "<div class=\"container\">" +
@@ -81,19 +81,19 @@
 
             //mytable +=
             //    "<section id=\"services\" class=\"services\"><div class=\"container\"><div class=\"section-title\"><h2 id=\"dname\"></h2><p style=\"text-colour:white\">You are in B2B Portal.<br/>Below are the list of applications which you have access.</p></div><div class=\"row\">"
-            
+
             mytable += "<table><tr>";
             //const roleids = sessionStorage.getItem("roles");
             setroles();
             //var roleids = "";
-            
+
             //getUID(DBName, Table, session_UID)
-                //.then(function (SUID) {
+            //.then(function (SUID) {
 
             //roleids = roles;
-                    //alert("roleids :" + roleids);
-                    getroles(roleids);
-                   //});
+            //alert("roleids :" + roleids);
+            getroles(roleids);
+            //});
             function getroles(roleids) {
                 //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
                 roleids.split(",").forEach(function (roleid) {
@@ -106,7 +106,7 @@
                     /*else {*/
                     if (role == "Delegated Admin") {
 
-                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Use delegated administration to assign limited admin privileges to users in your org who aren’t administrators</p></div></div></td>"
+                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "');\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Use delegated administration to assign limited admin privileges to users in your org who aren’t administrators</p></div></div></td>"
 
                     }
                     if (role == "Ordering") {
@@ -130,21 +130,21 @@
 
 
                 //console.log(mytable);
-                    document.write(mytable);
-                    //sessionStorage.clear();
+                document.write(mytable);
+                //sessionStorage.clear();
             }
-               //});
+            //});
         }
-                 
 
-        
+
+
 
     </script>
 
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/Gigya.js"></script>
-    <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_N5VPDf3V4P1qTxL2V5ssDA"></script>
+    <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_AV5pqQcLCM0a9C53WPjvbA"></script>
 
 
 
