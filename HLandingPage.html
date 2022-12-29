@@ -45,6 +45,7 @@
             }
             if (flag == "Delegated Admin") {
 
+                gigya.accounts.session.verify({ callback: console.log });
                 console.log("orgid " + orgId);
                 var params = {
                     "orgId": orgId
