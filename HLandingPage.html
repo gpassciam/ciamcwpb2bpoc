@@ -6,146 +6,252 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <script src="assets/js/Gigya.js"></script>
     <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_N5VPDf3V4P1qTxL2V5ssDA"></script>
-
+    
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="assets/js/IndexedDB.js"></script>
 
 </head>
 <body>
+    <div id="Display">
+
+        <table width="100%">
+            <tbody>
+                <tr><td><div id="header"></div></td></tr>
+                <tr>
+                    <td>
+                        <section id="ord-ret-hero">
+
+
+                            <div class="container">
+
+                                <div class=\"col-lg-7 order-2 order-lg-1 d-flex align-items-center\">
+
+                                    <div data-aos="zoom-out" class="aos-init aos-animate">
+                                        <br><span id="fname"></span>
+                                            <h1>Welcome to CWP Pilot Dev Launchpad </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="Orgs" onchange="GetSelectedTextValue(this)"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="divorg"></div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+        
+    </div>
+                    <script type="text/javascript">
+
+                        let dropdown = document.getElementById('Orgs');
+                        dropdown.length = 0;
+
+                        let defaultOption = document.createElement('option');
+                        defaultOption.text = 'Choose Organization';
+
+                        dropdown.add(defaultOption);
+                        dropdown.selectedIndex = 0;
+
+                        //var session_UID = CheckLogin();
+                        const queryString = window.location.search;
+                        //console.log(queryString);
+                        const urlParams = new URLSearchParams(queryString);
+                        //alert(urlParams.get('UID'));
+                        var firstname = urlParams.get('firstname');
+                        var orgName;
+                            //= urlParams.get('orgName');
+                        //var orgId = urlParams.get('orgid');
+                        //var roleids = urlParams.get('roleids');
+                        var email = urlParams.get('email');
+                        var apiKey = "4_AV5pqQcLCM0a9C53WPjvbA";
+                        //var apikey = Config.apikey;
+                        var secretKey = "JpvRlfmE6xSu%2F%2BSHkU6OdaRY0cuMtwim94iCX3MHEBA%3D";
+                        //var secretkey = Config.secretKey;
+
+                        //setroles();
+                        //var method = "accounts.search";
+                        //var query = "SELECT  groups.organizations.orgName FROM accounts WHERE groups.organizations.orgName is not null";
+                        document.getElementById("fname").innerText = "Hi " + firstname;
+                        var query = "SELECT profile.firstName, profile.lastName, profile.email, groups.organizations.orgName, groups.organizations.roles,isActive,groups.organizations.orgId FROM accounts WHERE groups.organizations.orgName is not null AND profile.email='" + email + "'";
+
+                        //const url = 'https://accounts.us1.gigya.com/accounts.search?apiKey=4_zU_l5sFaCUWaU5W-0KFDzw&secret=JpvRlfmE6xSu%2F%2BSHkU6OdaRY0cuMtwim94iCX3MHEBA%3D&query=SELECT%20profile.firstName,UID%20FROM%20accounts';
+                        const url = "https://accounts.us1.gigya.com/accounts.search?apiKey=" + apiKey + "&secret=" + secretKey + "&query=" + query;
+                        //alert(url);
+                        var xhr = new XMLHttpRequest();
+                        //var params = 'querySig=' + query + '_' + abs(now - timestamp) ;
+
+                        xhr.open('POST', url, true);
+                        //xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                        //Send the proper header information along with the request
+                        //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xhr.send();
+                        //console.log((JSON.stringify(this.responseText)));
+                        xhr.onload = function () {//Call a function when the state changes.
+                            //alert(xhr.status);
+                            if (xhr.status == 200) {
+                                const response = JSON.parse(this.responseText);
+                                console.log((JSON.stringify(this.responseText)));
+                                //alert(response);
+                                if (response["errorCode"] == 0) {
+
+                                    //const data = response.responseText;
+
+                                    //data = data.
+                                    //const data = response.results;
+                                    //var data = JSON.stringify(response.results, ["groups", "organizations", "orgName"]);
+                                    let orgs = response.results[0].groups.organizations;
+                                    //alert(orgs);
+                                    let option;
+                                    for (let i = 0; i < orgs.length; i++) {
+                                        option = document.createElement('option');
+                                        option.text = orgs[i].orgName;
+                                        option.value = orgs[i].orgId + "\\" + orgs[i].roles;
+                                        //alert(option.value);
+                                        dropdown.add(option);
+
+
+                                    }
+                                }
+                            }
+                        }
+
+                        function GetSelectedTextValue(Orgs) {
+                            var SOrgName = Orgs.options[Orgs.selectedIndex].innerHTML;
+                            var OrgDetails = Orgs.value;
+                            //alert("Selected Text: " + SOrgName + " Value: " + OrgDetails);
+                            
+                            var roleids = OrgDetails.split("\\");
+                            //alert(roleids[1]);
+                            getroles(roleids[1], roleids[0]);
+                            OrgName.innerHTML = "Organization :" + SOrgName;
+                           
+                        }
+
+
+                        function services(flag, orgId) {
+
+                            if (flag == "Ordering") {
+
+
+                                //alert("your Ordering site will be open in new tab");
+                                window.open("Ordering.html", "_blank");
+                            }
+
+                            if (flag == "Return") {
+
+
+                                window.open("Returns.html", "_blank");
+                            }
+                            if (flag == "Delegated Admin") {
+
+                                gigya.accounts.session.verify({ callback: console.log });
+                                console.log("orgid " + orgId);
+                                var params = {
+                                    "orgId": orgId
+                                };
+                                gigya.accounts.b2b.openDelegatedAdminLogin(params);
+                                //var orgid = sessionStorage.getItem('OrgID');
+                                //alert("you : " + sessionStorage.getItem('OrgID'));
+                                //opendelegateadmin(orgid);
+
+
+                            }
+                        }
+
+
+                        if (firstname == null) {
+                            flag = 0;
+                            alert('Please Login to Proceed');
+                            window.open("https://435621550915.us1.my.gigya-ext.com/pages/test", "_self");
+
+                        }
+                        else {
+
+
+                            
+                            
+                            //const roleids = sessionStorage.getItem("roles");
+                            setroles();
+                            //var roleids = "";
+
+                            //getUID(DBName, Table, session_UID)
+                            //.then(function (SUID) {
+
+                            //roleids = roles;
+                            //alert("roleids :" + roleids);
+                            //getroles(roleids);
+                            //});
+                            function getroles(roleids,orgId) {
+                                var mytable = "<table width=\"100%\"><tbody><tr><td><section id=\"services\" class=\"services\"><div align=\"center\">"
+
+                                mytable +=
+                                    "<section id=\"services\" class=\"services\"><div class=\"container\"><h2 id=\"OrgName\">Organization : " + orgName + "</h2><div align=\"center\">"
+
+                                //mytable +=
+                                //    "<section id=\"services\" class=\"services\"><div class=\"container\"><div class=\"section-title\"><h2 id=\"dname\"></h2><p style=\"text-colour:white\">You are in B2B Portal.<br/>Below are the list of applications which you have access.</p></div><div class=\"row\">"
+
+                                mytable += "<table><tr>";
+                                //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
+                                roleids.split(",").forEach(function (roleid) {
+                                    role = localStorage.getItem(roleid);
+                                    //alert("role name :" + role);
+                                    //if (role == "Delegated Admin") {
+
+                                    //    //opendelegateadmin(sessionStorage.getItem('OrgID'));
+                                    //}
+                                    /*else {*/
+                                    if (role == "Delegated Admin") {
+
+                                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "','" + orgId + "');\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Use delegated administration to assign limited admin privileges to users in your org who aren’t administrators</p></div></div></td>"
+
+                                    }
+                                    if (role == "Ordering") {
+
+                                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "','" + orgId + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment ordering efficiency with Roche web-based application</p></div></div></td>"
+
+                                    }
+                                    if (role == "Return") {
+                                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "','" + orgId + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment returns efficiency with Roche web-based application</p></div></div></td>"
+
+                                    }
+                                    /*}*/
+
+                                })
+
+
+                                mytable += "</tr></table></div></div></section ></td></tr><tr><td>"
+                                mytable +=
+                                    "<hr style=\"height: 50pt;visibility: hidden\" /><div id=\"footer\"></div>" +
+                                    "</td></tr ></tbody ></table >";
+
+                                document.getElementById('divorg').innerHTML = mytable;
+                                //console.log(mytable);
+                                //document.write(mytable);
+                                //sessionStorage.clear();
+                            }
+                            //});
+                        }
 
 
 
-    <script type="text/javascript">
 
-        //var session_UID = CheckLogin();
-        const queryString = window.location.search;
-        //console.log(queryString);
-        const urlParams = new URLSearchParams(queryString);
-        //alert(urlParams.get('UID'));
-        var firstname = urlParams.get('firstname');
-        var orgName = urlParams.get('orgName');
-        var orgId = urlParams.get('orgid');
-        var roleids = urlParams.get('roleids');
+                    </script>
 
 
-        function services(flag) {
-
-            if (flag == "Ordering") {
-
-
-                //alert("your Ordering site will be open in new tab");
-                window.open("Ordering.html", "_blank");
-            }
-
-            if (flag == "Return") {
-
-
-                window.open("Returns.html", "_blank");
-            }
-            if (flag == "Delegated Admin") {
-
-                gigya.accounts.session.verify({ callback: console.log });
-                console.log("orgid " + orgId);
-                var params = {
-                    "orgId": orgId
-                };
-                gigya.accounts.b2b.openDelegatedAdminLogin(params);
-                //var orgid = sessionStorage.getItem('OrgID');
-                //alert("you : " + sessionStorage.getItem('OrgID'));
-                //opendelegateadmin(orgid);
-
-
-            }
-        }
-
-
-        if (firstname == null) {
-            flag = 0;
-            alert('Please Login to Proceed');
-            window.open("https://435621550915.us1.my.gigya-ext.com/pages/test", "_self");
-
-        }
-        else {
-
-
-            var mytable = "<table width=\"100%\"><tbody><tr><td><div id=\"header\"></div></td></tr><tr><td><section id=\"ord-ret-hero\">" +
-
-                "<div class=\"container\">" +
-                "<div class=\"col-lg-7 order-2 order-lg-1 d-flex align-items-center\">" +
-                "<div data-aos=\"zoom-out\" class=\"aos-init aos-animate\"><br>" +
-                //"<h1>Empower your organization with CIAM POC </h1></div></div></div></section ></td></tr><tr><td>";
-                "Hi " + firstname + "<h1 style=\"font-family:arial\">Welcome to CWP Pilot Dev Launchpad </h1></div></div></div></section ></td></tr><tr><td>";
-            //mytable += "<div>Organization : " + orgName + "</div>";
-            mytable +=
-                "<section id=\"services\" class=\"services\"><div class=\"container\"><h2>Organization : " + orgName + "</h2><div align=\"center\">"
-
-            //mytable +=
-            //    "<section id=\"services\" class=\"services\"><div class=\"container\"><div class=\"section-title\"><h2 id=\"dname\"></h2><p style=\"text-colour:white\">You are in B2B Portal.<br/>Below are the list of applications which you have access.</p></div><div class=\"row\">"
-
-            mytable += "<table><tr>";
-            //const roleids = sessionStorage.getItem("roles");
-            setroles();
-            //var roleids = "";
-
-            //getUID(DBName, Table, session_UID)
-            //.then(function (SUID) {
-
-            //roleids = roles;
-            //alert("roleids :" + roleids);
-            getroles(roleids);
-            //});
-            function getroles(roleids) {
-                //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
-                roleids.split(",").forEach(function (roleid) {
-                    role = localStorage.getItem(roleid);
-                    //alert("role name :" + role);
-                    //if (role == "Delegated Admin") {
-
-                    //    //opendelegateadmin(sessionStorage.getItem('OrgID'));
-                    //}
-                    /*else {*/
-                    if (role == "Delegated Admin") {
-
-                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "');\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Use delegated administration to assign limited admin privileges to users in your org who aren’t administrators</p></div></div></td>"
-
-                    }
-                    if (role == "Ordering") {
-
-                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment ordering efficiency with Roche web-based application</p></div></div></td>"
-
-                    }
-                    if (role == "Return") {
-                        mytable += "<td>&nbsp;</td><td onclick=\"services('" + role + "')\"><div><div class=\"icon-box\"><div class=\"icon\"><i class=\"fas fa-heartbeat\"></i></div><h4>" + role + "</h4><p id=\"da\">Improve wholesale medical equipment returns efficiency with Roche web-based application</p></div></div></td>"
-
-                    }
-                    /*}*/
-
-                })
-
-
-                mytable += "</tr></table></div></div></section ></td></tr><tr><td>"
-                mytable +=
-                    "<hr style=\"height: 50pt;visibility: hidden\" /><div id=\"footer\"></div>" +
-                    "</td></tr ></tbody ></table >";
-
-
-                //console.log(mytable);
-                document.write(mytable);
-                //sessionStorage.clear();
-            }
-            //});
-        }
-
-
-
-
-    </script>
-
-
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/Gigya.js"></script>
-    <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_N5VPDf3V4P1qTxL2V5ssDA"></script>
+                    <script src="assets/js/jquery.min.js"></script>
+                    <script src="assets/js/Gigya.js"></script>
+                    <script src='assets/js/Config.js'></script>
+                    <script src="https://cdns.gigya.com/js/gigya.js?apikey=4_N5VPDf3V4P1qTxL2V5ssDA"></script>
 
 
 
