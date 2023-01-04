@@ -92,7 +92,7 @@ function onb2bLogin(response) {
         let DBName = "Users";
         let Table = "Users_Info";
         let Data = JSON.parse(JSON.stringify(response));
-        alert(response.profile.email);
+        //alert(response.profile.email);
         var email = response.profile.email;
         console.log("Data :" + Data);
         ProcessDB(DBName, Table, Data, key);
