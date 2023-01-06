@@ -61,7 +61,7 @@ function onb2bLogin(response) {
     //gigya.accounts.getAccountInfo(params, { callback: doContinueSSO() });
 
     function doCallback(response) {
-        alert(JSON.stringify(response));
+        //alert(JSON.stringify(response));
     }
     function doContinueSSO() {
         var params = {
