@@ -15,7 +15,7 @@ function Adminload() {
 
 function SignInScreen(flag) {
     
-    //load();
+    load();
     
     sessionStorage.setItem("flag", flag);
     customLangParams = {
