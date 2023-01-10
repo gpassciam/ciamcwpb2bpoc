@@ -12,7 +12,7 @@
     <script src="assets/js/IndexedDB.js"></script>
 
 </head>
-<body>
+<body onload="load();">
     <div id="Display">
 
         <table width="100%">
@@ -60,7 +60,7 @@
                         defaultOption.text = 'Choose Organization';
 
                         dropdown.add(defaultOption);
-                        dropdown.selectedIndex = 1;
+                        
 
                         //var session_UID = CheckLogin();
                         const queryString = window.location.search;
@@ -118,7 +118,7 @@
                                         option.value = orgs[i].orgId + "\\" + orgs[i].roles;
                                         //alert(option.value);
                                         dropdown.add(option);
-
+                                        dropdown.selectedIndex = 1;
 
                                     }
                                 }
