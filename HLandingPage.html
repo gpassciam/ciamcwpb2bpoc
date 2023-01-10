@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <select id="Orgs" onchange="GetSelectedTextValue(this)"></select>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -56,10 +56,10 @@
                         let dropdown = document.getElementById('Orgs');
                         dropdown.length = 0;
 
-                        let defaultOption = document.createElement('option');
-                        defaultOption.text = 'Choose Organization';
+                        //let defaultOption = document.createElement('option');
+                        //defaultOption.text = 'Choose Organization';
 
-                        dropdown.add(defaultOption);
+                        //dropdown.add(defaultOption);
                         
 
                         //var session_UID = CheckLogin();
@@ -118,15 +118,21 @@
                                         option.value = orgs[i].orgId + "\\" + orgs[i].roles;
                                         //alert(option.value);
                                         dropdown.add(option);
-                                        dropdown.selectedIndex = 1;
-
+                                        
+                                        //GetSelectedTextValue(orgs);
                                     }
+
+                                    Orgs.selectedIndex = 0;
+                                    //alert(this);
+                                    GetSelectedTextValue(Orgs);
                                 }
                             }
                         }
 
                         function GetSelectedTextValue(Orgs) {
+                            //alert(JSON.stringify(Orgs.options));
                             var SOrgName = Orgs.options[Orgs.selectedIndex].innerHTML;
+                            //alert(SOrgName);
                             var OrgDetails = Orgs.value;
                             //alert("Selected Text: " + SOrgName + " Value: " + OrgDetails);
                             
@@ -197,8 +203,8 @@
                                 mytable +=
                                     "<section id=\"services\" class=\"services\"><div class=\"container\"><h2 id=\"OrgName\">Organization : " + orgName + "</h2><div align=\"center\">"
 
-                                //mytable +=
-                                //    "<section id=\"services\" class=\"services\"><div class=\"container\"><div class=\"section-title\"><h2 id=\"dname\"></h2><p style=\"text-colour:white\">You are in B2B Portal.<br/>Below are the list of applications which you have access.</p></div><div class=\"row\">"
+                                mytable +=
+                                    "<section id=\"services\" class=\"services\"><div class=\"container\"><select id="Orgs"  onchange="GetSelectedTextValue(this)"></select></div><div class=\"row\">"
 
                                 mytable += "<table><tr>";
                                 //const roleids = "9396cbdd-320f-4a6f-ab3d-7db4fbedda6a,7853dce4-23ae-4cca-9691-2859300eac76,98e288cc-63ed-44bc-adc9-88acee3d1224";
